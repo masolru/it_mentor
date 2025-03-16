@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+
+class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(" Введите арифметическое выражение типа a + b ");
+        String input = scanner.nextLine();
+
+        try {
+            int result = calc(input);
+            System.out.println("Результат " + result);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка ввода данных " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+
+    }
+
+    public static int calc(String input) {
+        String[] parts = input.split(" ");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Некорректный ввод. Формат ввода: 'число_оператор_число'.");
+        }
+
+        String one = parts[0];
+        String oper = parts[1];
+        String two = parts[2];
+
+        int a = Integer.parseInt(one);
+        int b = Integer.parseInt(two);
+
+        if (a%a!=0||b%b!=0) {
+           throw new IllegalArgumentException("Числа должны быть целыми");
+        }
+        if (a < 1 || a > 10 || b < 1 || b > 10) {
+            throw new IllegalArgumentException("Введено число вне заданного дипазона (от 1 до 10 включительно)");
+
+        }
+
+
+        int result;
+        switch (oper) {
+            case "+":
+                result = a + b;
+                break;
+            case "-":
+                result = a - b;
+                break;
+            case "*":
+                result = a * b;
+                break;
+            case "/":
+                if (b == 0) {
+                    throw new IllegalArgumentException("Делить на ноль нельзя");
+                }
+                result = a / b;
+                break;
+            default:
+                throw new IllegalArgumentException("Неверный оператор:" + oper);
+        }
+
+        return result;
+    }
+
+
+}
